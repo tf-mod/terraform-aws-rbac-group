@@ -4,11 +4,6 @@ variable "target_role_arn" {
   default     = []
 }
 
-# members
-variable "members" {
-  default = []
-}
-
 # description
 variable "name" {
   description = "The logical name of group"
