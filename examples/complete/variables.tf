@@ -17,6 +17,12 @@ variable "target_role_arn" {
   default     = []
 }
 
+# policies
+variable "policy_arn" {
+  description = "A list of full arn of iam policies to attach this group"
+  default     = []
+}
+
 # description
 variable "name" {
   description = "The logical name of role"
