@@ -7,6 +7,7 @@ resource "aws_iam_group" "group" {
 
 # security/policy
 data "aws_iam_policy_document" "assume" {
+  count = length(var.target_role_arn) > 0 ? 1 : 0
   statement {
     actions = [
       "sts:AssumeRole",
@@ -19,12 +20,14 @@ data "aws_iam_policy_document" "assume" {
 
 # security/policy
 resource "aws_iam_policy" "assume" {
+  count  = length(var.target_role_arn) > 0 ? 1 : 0
   name   = join("-", [local.name, "assume"])
-  policy = data.aws_iam_policy_document.assume.json
+  policy = data.aws_iam_policy_document.assume[0].json
 }
 
 resource "aws_iam_group_policy_attachment" "assume" {
-  policy_arn = aws_iam_policy.assume.arn
+  count      = length(var.target_role_arn) > 0 ? 1 : 0
+  policy_arn = aws_iam_policy.assume[0].arn
   group      = aws_iam_group.group.name
 }
 
